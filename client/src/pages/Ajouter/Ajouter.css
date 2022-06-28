@@ -1,0 +1,32 @@
+.form-group {
+    margin-top: 100px;
+}
+
+.form-title {
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-subscrube {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.submit-product-btn-block {
+    margin-top: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.submit-product-btn {
+    color: white !important;
+    background-color: #212529 !important;
+    border-color: #212529 !important;
+    width: 200px;
+    height: 50px;
+}
