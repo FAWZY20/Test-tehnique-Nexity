@@ -1,39 +1,36 @@
-import Header from "../../components/Header/Header"
+import React, { useState } from 'react';
+import Header from "../../components/Header/Header";
 import Button from 'react-bootstrap/Button';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
 import "./Ajouter.css"
-import React from 'react';
 import axios from "axios";
 
 
 function Ajouter() {
-    const [formValue, setFormValue] = React.useState({
-        title: '',
-        description: ''
+    const [formValue, setFormValue] = useState({
+        title: "",
+        description: ""
     });
 
-    const handleSubmit = event => {
-        event.preventDefault();
-        const product =  {
+    const submit = (e) => {
+        e.preventDefault();
+        axios.post("http://localhost:9000/api/subscribe", {
             title: formValue.title,
             description: formValue.description
-        }
-
-        axios.post('http://localhost:9000/api/subscribe', {product})
-            .then(res =>{
-                console.log(res);
+        })
+            .then(res => {
                 console.log(res.data);
                 window.location = "/"
             })
     }
 
-    const handleChangTitlee = event =>{
-        setFormValue({title: event.target.value});
-    }
 
-    const handleChangeDescription = event =>{
-        setFormValue({description: event.target.value});
+    const handle = (e) => {
+        const newdata = { ...formValue }
+        newdata[e.target.id] = e.target.value
+        setFormValue(newdata)
+        console.log(newdata);
     }
 
     return (
@@ -42,21 +39,20 @@ function Ajouter() {
             <div className="container-fluid" >
                 <div className="container ">
                     <h1 className="form-title">Enregistrer un produit</h1>
-                    <div className="row form-subscrube">
-                        <Form className="col-lg-6" onSubmit={handleSubmit}>
-                            <Form.Group className="mb-3 form-group" controlId="formBasicEmail">
-                                <Form.Label>Titre du produit </Form.Label>
-                                <Form.Control type="text" name="title" onChange={handleChangTitlee} />
-                                <Form.Label>Description courte du produit </Form.Label>
-                                <Form.Control type="text" name="description" onChange={handleChangeDescription} />
-                                
-                            </Form.Group>
+                    <div className="row form-subscribe">
+                        <form className="form-subscribe-input col-lg-6" onSubmit={(e) => submit(e)} >
+                            <div>
+                                <input onChange={(e) => handle(e)} id="title" value={formValue.title} placeholder='Titre' type="text"></input>
+                            </div>
+                            <div>
+                                <input onChange={(e) => handle(e)} id="description" value={formValue.description} placeholder='Description' type="text"></input>
+                            </div>
                             <div className="submit-product-btn-block">
                                 <Button className="submit-product-btn" variant="primary" type="submit">
                                     Enregistrer
                                 </Button>
                             </div>
-                        </Form>
+                        </form>
                     </div>
                 </div>
             </div>

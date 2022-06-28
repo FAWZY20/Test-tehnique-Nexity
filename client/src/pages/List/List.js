@@ -8,8 +8,9 @@ import "./List.css"
 
 function List() {
     const [products, setProduct] = useState([])
+    
     const [del, setDel] = useState({
-        posts:[]
+        posts: []
     })
 
     const fetchProduct = async () => {
@@ -17,11 +18,13 @@ function List() {
         setProduct(data)
     }
 
-    const deleteProduct = (id, e) => {
+    const deleteProduct = (id, req, e) => {
         api.delete(`/users/delete/${id}`)
         const posts = del.posts.filter(item => item.id !== id)
-        setDel({posts})
-        //location.reload()
+            .then(res => {
+                window.location.reload(false);
+            })
+        setDel({ posts })
     }
 
 
@@ -37,7 +40,7 @@ function List() {
                 <div className="container list" >
                     <h1 className="title-list">Liste des produit ajouter</h1>
                     <div className="row col-lg-10" >
-                        <Table className="list-table"  striped bordered hover>
+                        <Table className="list-table" striped bordered hover>
                             <thead>
                                 <tr>
                                     <th>id</th>
